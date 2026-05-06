@@ -1,6 +1,6 @@
-plugin.description: This plugin provides a mobile version of ruTorrent. (Not compatible with the ipad plugin)
-plugin.author: zebraxxl,xombiemp
-plugin.version: 1.0
+plugin.description: Mobile ruTorrent UI with Appbox-aligned styling (Tailwind). Fork of xombiemp/rutorrentMobile; not compatible with the ipad plugin.
+plugin.author: zebraxxl,xombiemp,CyloTech
+plugin.version: 1.1
 rtorrent.need: 1
 rtorrent.remote: warning
-plugin.runlevel: 15
+plugin.runlevel: 14

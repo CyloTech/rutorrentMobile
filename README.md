@@ -1,48 +1,71 @@
-## ruTorrent Mobile Plugin
+## ruTorrent Mobile (Appbox)
 
-### Prereqs
-This plugin requires the httprpc plugin.
+Mobile-friendly ruTorrent UI: touch targets, simplified navigation, and styling aligned with the [Appbox](https://appbox.co) dashboard (Tailwind-based surfaces, indigo accent, Appbox emblem in the header).
+
+Maintained by **CyloTech** as a fork of [xombiemp/rutorrentMobile](https://github.com/xombiemp/rutorrentMobile).
+
+### Requirements
+
+- **httprpc** plugin (required).
+- ruTorrent **5.x** / **jQuery 3**–compatible environments are supported (see `init.js` for compatibility shims).
 
 ### Installation
-Place all the plugin files in a directory called mobile in the rutorrent/plugins directory.
-To clone directly from this git repository, run this command in the rutorrent/plugins directory:
+
+Place all plugin files in a directory named **`mobile`** under `rutorrent/plugins/`.
+
+Clone this repository:
+
+```bash
+cd rutorrent/plugins
+git clone https://github.com/CyloTech/rutorrentMobile.git mobile
 ```
-git clone https://github.com/xombiemp/rutorrentMobile.git mobile
 
+> **Note:** The directory **must** be named `mobile` so assets and `mobile.css` resolve correctly.
+
+> **Warning:** Not compatible with the **ipad** plugin.
+
+### Styling (Tailwind)
+
+- **`appbox.css`** is generated from `styles/appbox-input.css` with the Tailwind v4 CLI.
+- After changing markup (`mobile.html`), `init.js` strings that introduce new utility classes, or `styles/appbox-input.css`, rebuild:
+
+```bash
+npm install
+npm run build:css
 ```
 
-> **Note:** It is important that the plugin directory is named 'mobile' so that the supporting files are loaded correctly.  
-> **Warning:** This plugin is not compatible with the ipad plugin.
+Commit the updated **`appbox.css`** so servers using the plugin do not need Node.js.
 
-Optional plugins that add additional functionality:
-* _getdir: Allows you to browse directories from your server when adding a torrent.
-* erasedata: Allows you to delete with data when deleting a torrent.
-* seedingtime: Adds the fields Added and Finished to the torrent details page.
-* ratio: Allows you to see and set the ratio group for a torrent.
-* throttle: Allows you to see and set the channel for a torrent.
+Optional plugins that add behaviour (unchanged from upstream):
+
+- **_getdir** — browse server directories when adding a torrent.
+- **erasedata** — delete with data from the delete confirmation flow.
+- **seedingtime** — Added / Finished fields in details.
+- **ratio** — ratio group in details.
+- **throttle** — channel in details.
 
 ### Configuration
-There are three configurable boolean options and one multi-value option that you may set at the top of init.js.
-#### plugin.enableAutodetect
-true by default. This option sets whether mobile devices will be autodetected to enable the plugin.
 
-#### plugin.tabletsDetect
-true by default. This option sets whether to include tablets in the autodetection.
+Options at the top of **`init.js`**:
 
-#### plugin.eraseWithDataDefault
-false by default. This option sets the default state of the delete with data checkbox in the confirmation page when deleting a torrent.  
-If in rutorrent you turned off 'Confirm when deleting torrents', this plugin will not display the confirmaion page either. In this case, the decision about deleting data will be determined by the value of this option.
+| Option | Default | Description |
+|--------|---------|-------------|
+| `plugin.enableAutodetect` | `true` | Auto-load on detected mobile browsers. |
+| `plugin.tabletsDetect` | `true` | Treat tablets as mobile for autodetect. |
+| `plugin.eraseWithDataDefault` | `false` | Default “delete with data” when ruTorrent’s delete confirmation is disabled. |
+| `plugin.sort` | `'-addtime'` | Default torrent list sort (`name`, `-name`, `size`, …; prefix `-` for descending). |
 
-#### plugin.sort
-'name' by default. Possible values: 'name', '-name', 'size', '-size', 'uploaded', '-uploaded', 'downloaded', '-downloaded', 'done', '-done', 'eta', '-eta', 'ul', '-ul', 'dl', '-dl', 'ratio', '-ratio', and if the seedingtime plugin is loaded 'addtime', '-addtime', 'seedingtime', '-seedingtime'.  
-This option sets the default sort value of the torrent list. Without negative it's ascending, with negative it's descending.
+### Usage
 
-### Utilization
-If you set plugin.enableAutodetect to true, the plugin will automaticaly load when detecting a mobile device. To force load the plugin in a desktop browser add '?mobile=1' to the end of the rutorrent url.
+With **`plugin.enableAutodetect`**, the mobile UI loads on supported mobile user agents. On desktop, append **`?mobile=1`** to the ruTorrent URL to force the mobile UI.
 
 ### Troubleshooting
-If you are experiencing problems with this plugin, for example it's not scrolling or there are overlapping elements, try these solutions.
-* Make sure the httprpc plugin is installed. The mobile plugin requires it.
-* Make sure the plugin directory is named 'mobile' or else it won't load the plugin specific css file called mobile.css
-* Make sure you don't have the ipad plugin installed. The ipad plugin will make it so you can't scroll in the mobile plugin.
-* If you are still having issues, submit an issue on github https://github.com/xombiemp/rutorrentMobile/issues and be sure to include as much detail as possible including: mobile device and OS and browser, server OS and webserver.
+
+- Ensure **httprpc** is installed and enabled.
+- Confirm the plugin path is **`plugins/mobile/`** and that **`appbox.css`** and **`mobile.css`** are present.
+- Remove the **ipad** plugin if scrolling or layout breaks.
+- Report issues: [https://github.com/CyloTech/rutorrentMobile/issues](https://github.com/CyloTech/rutorrentMobile/issues) (include device, OS, browser, and web server details).
+
+### License
+
+GPL-3.0 (see `LICENSE`).
